@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:isiine/json/slide.dart';
+import 'package:isiine/json/vendor.dart';
 import 'package:isiine/list_products.dart';
 import 'package:isiine/product_details.dart';
 import 'package:isiine/product_item.dart';
@@ -12,6 +13,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:isiine/vendor_products.dart';
 
 import 'json/category.dart';
 import 'json/product.dart';
@@ -41,6 +43,8 @@ class _ProductsState extends State<Products> with Superbase {
   bool loadingCategories = true;
   List<Category> categoriesList = [];
   List<Slide> slides = [];
+  List<Vendor> vendors = [];
+  List<Category> featuredCategories = [];
 
   String? _token;
 
@@ -49,7 +53,9 @@ class _ProductsState extends State<Products> with Superbase {
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       getProducts();
       getSlide();
+      getVendors();
       getCategories();
+      getFeaturedCategories();
     });
 
     super.initState();
@@ -64,6 +70,44 @@ class _ProductsState extends State<Products> with Superbase {
             slides = (object['data'] as Iterable)
                 .map((e) => Slide.fromJson(e))
                 .toList();
+          });
+        },
+        onEnd: () {
+          setState(() {
+            loadingCategories = false;
+          });
+        });
+  }
+
+  void getVendors() {
+    this.ajax(
+        url: "vendors",
+        server: false,
+        onValue: (object, url) {
+          setState(() {
+            vendors = (object['data'] as Iterable)
+                .map((e) => Vendor.fromJson(e))
+                .toList();
+          });
+        },
+        onEnd: () {
+          setState(() {
+            loadingCategories = false;
+          });
+        });
+  }
+
+  void getFeaturedCategories() {
+    this.ajax(
+        url: "products/featured_categories?limit=12",
+        server: true,
+        error: (s,v)=>print(s),
+        onValue: (object, url) {
+          print(object);
+          setState(() {
+            featuredCategories = (object['data'] as Iterable?)
+                ?.map((e) => Category.fromJson(e))
+                .toList() ?? [];
           });
         },
         onEnd: () {
@@ -235,6 +279,32 @@ class _ProductsState extends State<Products> with Superbase {
                         options: CarouselOptions(autoPlay: true)),
                   ),
           ),
+          Container(height: 150,
+          child: ListView.builder(padding: EdgeInsets.all(10),itemCount:vendors.length,scrollDirection: Axis.horizontal,itemBuilder: (context,index){
+            var it = vendors[index];
+            return Container(
+              width: 110,
+              child: GestureDetector(
+                onTap: (){
+                  Navigator.push(context, CupertinoPageRoute(builder: (context)=>VendorProduct(vendor: it,)));
+                },
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: CircleAvatar(
+                        radius: 42,
+                        backgroundImage: CachedNetworkImageProvider(it.image),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 3),
+                      child: Text("${it.name}",maxLines: 1,overflow: TextOverflow.ellipsis,style: Theme.of(context).textTheme.subtitle2,),
+                    )
+                  ],
+                ),
+              ),
+            );
+          }),),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -455,7 +525,52 @@ class _ProductsState extends State<Products> with Superbase {
                           );
                         },
                         itemCount: bestSellingList.length),
-                  )
+                  ),
+          Column(
+            children: featuredCategories.map((e) => Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding:
+                      EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 5),
+                      child: Text(
+                        "${e.category}",
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                      ),
+                    ),
+                    IconButton(
+                      icon: Icon(
+                        Icons.chevron_right,
+                        size: 28.0,
+                        color: color,
+                      ),
+                      onPressed: () => goToMore(
+                          "categories/products?category_id=176&limit=100", e.category),
+                    )
+                  ],
+                ),
+                Container(
+                  height: 180,
+                  child: GridView.builder(
+                      scrollDirection: Axis.horizontal,
+                      shrinkWrap: true,
+                      gridDelegate:
+                      SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 1,
+                          childAspectRatio: 5.7 / 4),
+                      itemBuilder: (context, index) {
+                        return ProductItem(
+                          product: e.products![index],
+                          cartCounter: widget.cartCounter,
+                        );
+                      },
+                      itemCount: e.products?.length ?? 0),
+                ),
+              ],
+            )).toList(),
+          )
         ],
       ),
     );

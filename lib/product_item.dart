@@ -146,7 +146,7 @@ class _ProductItemState extends State<ProductItem> with Superbase {
                             cartCounter: widget.cartCounter);
                       },
                       child: Icon(
-                        MaterialCommunityIcons.cart_arrow_down,
+                       MaterialCommunityIcons.cart_arrow_down,
                         size: 20,
                       ),
                     ),

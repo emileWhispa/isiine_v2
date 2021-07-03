@@ -109,7 +109,7 @@ class _CategoriesState extends State<Categories> with Superbase {
                                 spacing: 7,
                                 children: categoriesList[index]
                                     .subCategories
-                                    .map((e) => FilterChip(
+                                    ?.map((e) => FilterChip(
                                           label: Text("${e.category}"),
                                           avatar: CircleAvatar(
                                             backgroundImage:
@@ -119,7 +119,7 @@ class _CategoriesState extends State<Categories> with Superbase {
                                           selected: false,
                                           onSelected: (s) {},
                                         ))
-                                    .toList(),
+                                    .toList() ?? [],
                               )
                             ],
                           ));

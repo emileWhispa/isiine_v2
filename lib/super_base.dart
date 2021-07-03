@@ -204,7 +204,7 @@ class Superbase {
                                         newState(() => p = p);
                                       },
                                       child: Icon(
-                                        MaterialCommunityIcons.cart_arrow_down,
+                                        Icons.remove,
                                         size: 15,
                                       ),
                                     ),
@@ -253,7 +253,7 @@ class Superbase {
                                       Icons.close_rounded,
                                       color: Colors.transparent,
                                     )
-                                  : Icon(Icons.add_shopping_cart_rounded),
+                                  : Icon(MaterialCommunityIcons.cart_arrow_down),
                               label: adding
                                   ? SizedBox(
                                       height: 25,

@@ -240,8 +240,8 @@ class _ProductDetailsState extends State<ProductDetails> with Superbase {
                                   physics: NeverScrollableScrollPhysics(),
                                   shrinkWrap: true,
                                   gridDelegate:
-                                      SliverGridDelegateWithMaxCrossAxisExtent(
-                                          maxCrossAxisExtent: 200,
+                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 3,
                                           childAspectRatio: 2.7 / 4),
                                   itemCount: _related.length,
                                   itemBuilder: (context, index) {

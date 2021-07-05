@@ -108,7 +108,7 @@ class _ProductDetailsState extends State<ProductDetails> with Superbase {
                     SliverToBoxAdapter(
                       child: CarouselSlider(
                         options: CarouselOptions(
-                          height: 180.0,
+                          height: 240.0,
                         ),
                         items: ( images.isNotEmpty ? images : [widget.pro.image]).map((i) {
                           return Builder(

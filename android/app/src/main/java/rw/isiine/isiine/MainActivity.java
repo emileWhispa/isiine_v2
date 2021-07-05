@@ -1,4 +1,4 @@
-package com.example.isiine;
+package rw.isiine.isiine;
 
 import io.flutter.embedding.android.FlutterActivity;
 

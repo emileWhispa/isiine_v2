@@ -12,6 +12,8 @@ import 'package:badges/badges.dart';
 import 'package:get/get.dart';
 
 import 'json/user.dart';
+import 'json/vendor.dart';
+import 'vendor_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -37,6 +39,7 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: Colors.grey.shade200,
           appBarTheme: AppBarTheme(
               actionsIconTheme: IconThemeData(color: Colors.red),
+              elevation: 2.2,
               textTheme: TextTheme(
                   headline6: Theme.of(context)
                       .primaryTextTheme
@@ -77,11 +80,14 @@ class _MyHomePageState extends State<MyHomePage> with Superbase {
 
   String? _token;
 
+
   void cartCounter(int d, {bool? increment}) {
     setState(() {
       cartCount = increment == true ? d + cartCount : d;
     });
   }
+
+  bool _loading = false;
 
   @override
   void initState() {
@@ -92,8 +98,27 @@ class _MyHomePageState extends State<MyHomePage> with Superbase {
       var string = (await prefs).getString(userKey);
       if (string != null) {
         _user = User.fromJson(jsonDecode(string));
-        setState(() {});
+        setState(() {
+          _loading = false;
+        });
+      }else {
+        string = (await prefs).getString(vendorKey);
+        if( string != null) {
+          var vendor = Vendor.fromJson(jsonDecode(string));
+          Navigator.popUntil(context, (route) => route.isFirst);
+          Navigator.pushReplacement(
+              context,
+              CupertinoPageRoute(
+                  builder: (context) =>
+                      VendorScreen(vendor: vendor,)));
+        }else{
+          setState(() {
+            _loading = false;
+          });
+        }
       }
+
+
     });
   }
 
@@ -115,7 +140,11 @@ class _MyHomePageState extends State<MyHomePage> with Superbase {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return _loading ? Scaffold(
+      body: Center(
+        child: CircularProgressIndicator(),
+      ),
+    ) : Scaffold(
       key: _scaffoldKey,
       backgroundColor: Colors.grey.shade200,
       body: Stack(

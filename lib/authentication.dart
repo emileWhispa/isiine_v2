@@ -4,8 +4,10 @@ import 'package:isiine/main.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:isiine/vendor_screen.dart';
 
 import 'json/user.dart';
+import 'json/vendor.dart';
 import 'registration.dart';
 import 'super_base.dart';
 
@@ -41,17 +43,27 @@ class _AuthenticationState extends State<Authentication> with Superbase {
           });
         },
         onValue: (value, string) async {
-          print(value);
-          print(string);
           if (value['code'] == 200) {
-            var user = User.fromJson(value['customer']);
-            (await prefs).setString(userKey, jsonEncode(value['customer']));
-            Navigator.popUntil(context, (route) => route.isFirst);
-            Navigator.pushReplacement(
-                context,
-                CupertinoPageRoute(
-                    builder: (context) =>
-                        MyHomePage(user: user, title: 'China kigali')));
+
+            if( value['user_role'] == "vendor"){
+              var vendor = Vendor.fromJson(value['customer']);
+              (await prefs).setString(vendorKey, jsonEncode(value['customer']));
+              Navigator.popUntil(context, (route) => route.isFirst);
+              Navigator.pushReplacement(
+                  context,
+                  CupertinoPageRoute(
+                      builder: (context) =>
+                          VendorScreen(vendor: vendor,)));
+            }else {
+              var user = User.fromJson(value['customer']);
+              (await prefs).setString(userKey, jsonEncode(value['customer']));
+              Navigator.popUntil(context, (route) => route.isFirst);
+              Navigator.pushReplacement(
+                  context,
+                  CupertinoPageRoute(
+                      builder: (context) =>
+                          MyHomePage(user: user, title: 'China kigali')));
+            }
           }
           print(value);
           showSnack(value['message']);

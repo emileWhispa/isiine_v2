@@ -53,6 +53,8 @@ class Superbase {
 
   String userKey = "user-key-val";
 
+  String vendorKey = "vendor-key-val";
+
   Color color = Color(0xffef3829);
 
   List<MaterialColor> get colors =>

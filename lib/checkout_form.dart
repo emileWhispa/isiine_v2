@@ -17,7 +17,7 @@ class _CheckoutFormState extends State<CheckoutForm> with Superbase {
   void initState() {
     // TODO: implement initState
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       loadPayments();
     });
   }

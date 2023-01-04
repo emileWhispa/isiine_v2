@@ -23,7 +23,7 @@ class _VendorProductState extends State<VendorProduct> with Superbase {
   void initState() {
     // TODO: implement initState
     super.initState();
-    WidgetsBinding.instance!
+    WidgetsBinding.instance
         .addPostFrameCallback((timeStamp) => this.loadProducts());
   }
 

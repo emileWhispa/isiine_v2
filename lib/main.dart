@@ -8,7 +8,7 @@ import 'package:isiine/profile.dart';
 import 'package:isiine/super_base.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as b2;
 import 'package:get/get.dart';
 
 import 'json/user.dart';
@@ -93,7 +93,7 @@ class _MyHomePageState extends State<MyHomePage> with Superbase {
   void initState() {
     _user = widget.user;
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) async {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       this.loadToken();
       var string = (await prefs).getString(userKey);
       if (string != null) {
@@ -192,7 +192,7 @@ class _MyHomePageState extends State<MyHomePage> with Superbase {
           BottomNavigationBarItem(
               icon: Icon(Icons.home_rounded), label: "Home"),
           BottomNavigationBarItem(
-              icon: Badge(
+              icon: b2.Badge(
                   elevation: 0,
                   showBadge: cartCount != 0,
                   badgeContent: Text(

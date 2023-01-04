@@ -36,7 +36,7 @@ class _RegistrationState extends State<Registration> with Superbase {
   void initState() {
     // TODO: implement initState
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       this.loadDistricts();
     });
   }

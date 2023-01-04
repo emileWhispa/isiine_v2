@@ -32,7 +32,7 @@ class _ProductDetailsState extends State<ProductDetails> with Superbase {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       this.loadRelated();
     });
   }

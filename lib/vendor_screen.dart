@@ -24,7 +24,7 @@ class _VendorScreenState extends State<VendorScreen> with Superbase{
   void initState() {
     // TODO: implement initState
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp)=>this.getSummary());
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp)=>this.getSummary());
 
     _timer = Timer.periodic(Duration(seconds: 60), (timer)=>this.getSummary());
   }

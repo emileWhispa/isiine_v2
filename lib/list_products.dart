@@ -22,7 +22,7 @@ class _ListProductState extends State<ListProduct> with Superbase {
   void initState() {
     // TODO: implement initState
     super.initState();
-    WidgetsBinding.instance!
+    WidgetsBinding.instance
         .addPostFrameCallback((timeStamp) => _key.currentState?.show());
   }
 

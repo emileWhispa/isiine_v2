@@ -50,7 +50,7 @@ class _ProductsState extends State<Products> with Superbase {
 
   @override
   void initState() {
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       getProducts();
       getSlide();
       getVendors();

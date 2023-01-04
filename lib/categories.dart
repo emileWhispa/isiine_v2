@@ -25,7 +25,7 @@ class _CategoriesState extends State<Categories> with Superbase {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       getCategories();
     });
   }

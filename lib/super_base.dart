@@ -240,10 +240,12 @@ class Superbase {
                           Container(
                             width: MediaQuery.of(context).size.width,
                             margin: EdgeInsets.only(left: 10),
-                            child: RaisedButton.icon(
-                              elevation: 0,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(7)),
+                            child: ElevatedButton.icon(
+                              style: ElevatedButton.styleFrom(
+                                elevation: 0,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(7)),
+                              ),
                               onPressed: adding
                                   ? null
                                   : () {

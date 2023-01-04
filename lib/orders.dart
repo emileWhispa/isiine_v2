@@ -18,7 +18,7 @@ class _OrdersState extends State<Orders> with Superbase {
   void initState() {
     // TODO: implement initState
     super.initState();
-    WidgetsBinding.instance!
+    WidgetsBinding.instance
         .addPostFrameCallback((timeStamp) => this.loadItems());
   }
 

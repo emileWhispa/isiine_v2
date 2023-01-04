@@ -19,7 +19,7 @@ class _ProductCategoryState extends State<ProductCategory> with Superbase {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance!
+    WidgetsBinding.instance
         .addPostFrameCallback((timeStamp) => this.loadProducts());
   }
 

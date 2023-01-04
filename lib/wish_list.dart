@@ -21,7 +21,7 @@ class _WishlistState extends State<Wishlist> with Superbase {
   void initState() {
     // TODO: implement initState
     super.initState();
-    WidgetsBinding.instance!
+    WidgetsBinding.instance
         .addPostFrameCallback((timeStamp) => this.loadWishlist());
   }
 

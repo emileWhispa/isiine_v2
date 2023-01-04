@@ -1,7 +1,6 @@
-import 'dart:convert';
+
 import 'dart:io';
 
-import 'package:badges/badges.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:isiine/checkout_form.dart';
 import 'package:dio/dio.dart';
@@ -29,7 +28,7 @@ class CartState extends State<Cart> with Superbase {
   Map<String, dynamic> selectedShipping = Map();
   Map<String, dynamic> selectedPayment = Map();
 
-  String? _token;
+  // String? _token;
   Map<String, dynamic>? addedShipping, addedPayment;
   bool? addedCustomer;
 
@@ -84,11 +83,11 @@ class CartState extends State<Cart> with Superbase {
     showLoading("Creating your order...");
 
     try {
-      var dio = Dio();
-
-      var data = {
-        "api_token": token,
-      };
+      // var dio = Dio();
+      //
+      // var data = {
+      //   "api_token": token,
+      // };
 
       Map<String, dynamic> d = {};
 
@@ -106,7 +105,7 @@ class CartState extends State<Cart> with Superbase {
                   content:
                       Text("Order created , you will pay cash on delivery"),
                   actions: [
-                    FlatButton(
+                    TextButton(
                       child: Text("Close"),
                       onPressed: () {},
                     )
@@ -124,7 +123,7 @@ class CartState extends State<Cart> with Superbase {
                 content: Text(
                     "We are not able to create your order because of the following reason \"${d['message']}\""),
                 actions: [
-                  FlatButton(
+                  TextButton(
                     child: Text("Close"),
                     onPressed: () {},
                   )
@@ -483,11 +482,14 @@ class CartState extends State<Cart> with Superbase {
                           "${fmtNbr(productsList.fold<double>(0.0, (previousValue, element) => previousValue + element.productCart.total))} RWF",
                           style: TextStyle(color: color),
                         ),
-                        trailing: RaisedButton(
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(25)),
-                          color: Colors.green,
+                        trailing: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(25)),
+                            backgroundColor: Colors.green,
+                            foregroundColor: Colors.white,
+                          ),
                           onPressed: () async {
                             if (await findUser == null) {
                               Navigator.push(
@@ -504,7 +506,6 @@ class CartState extends State<Cart> with Superbase {
 
                             loadItems();
                           },
-                          textColor: Colors.white,
                           child: Text("Checkout"),
                         ),
                       ),

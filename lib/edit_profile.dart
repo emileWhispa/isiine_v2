@@ -48,7 +48,7 @@ class _EditProfileState extends State<EditProfile> with Superbase {
     _addressTwoController =
         new TextEditingController(text: widget.user.address2);
     _streetController = new TextEditingController(text: widget.user.street);
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       this.loadDistricts();
     });
   }
